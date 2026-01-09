@@ -2,7 +2,7 @@ from bson import ObjectId
 from fastapi import HTTPException, status
 from app.core import database
 from app.models.task import TaskModel
-
+from datetime import datetime
 
 def create_task(data, current_user):
     tasks_col = database.db["tasks"]
@@ -82,29 +82,63 @@ def get_task_by_id(task_id: ObjectId):
 
 
 def update_task(task_id: ObjectId, data, user):
-    task = get_task_by_id(task_id)
+    tasks_col = database.db["tasks"]
 
-    if user["role"] != "admin" and task["owner_id"] != user["_id"]:
+    # 1️⃣ Existence check
+    task = tasks_col.find_one({"_id": task_id})
+    if not task:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Task not found"
+        )
+
+    # 2️⃣ Authorization
+    is_owner = task["owner_id"] == user["_id"]
+    is_admin = user["role"] == "admin"
+
+    if not (is_owner or is_admin):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not allowed to update this task"
         )
 
-    update_data = {k: v for k, v in data.dict().items() if v is not None}
+    # 3️⃣ Prepare update payload
+    # update_data = {
+    #     **{k: v for k, v in data.dict().items() if v is not None},
+    #     "updated_at": datetime.utcnow(),
+    #     "updated_by": user["_id"]
+    # }
+    update_data = data.dict(exclude_unset=True)
 
-    database.db["tasks"].update_one(
+    if not update_data:
+        return  # nothing to update
+
+    update_data["updated_at"] = datetime.utcnow()
+    update_data["updated_by"] = user["_id"]
+
+    # 4️⃣ Apply update
+    tasks_col.update_one(
         {"_id": task_id},
         {"$set": update_data}
     )
 
-
 def delete_task(task_id: ObjectId, user):
-    task = get_task_by_id(task_id)
+    tasks_col = database.db["tasks"]
 
-    if user["role"] != "admin" and task["owner_id"] != user["_id"]:
+    # 1️⃣ Existence check
+    task = tasks_col.find_one({"_id": task_id})
+    if not task:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Task not found"
+        )
+
+    # 2️⃣ Authorization
+    if task["owner_id"] != user["_id"] and user["role"] != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not allowed to delete this task"
         )
 
-    database.db["tasks"].delete_one({"_id": task_id})
+    # 3️⃣ Delete
+    tasks_col.delete_one({"_id": task_id})

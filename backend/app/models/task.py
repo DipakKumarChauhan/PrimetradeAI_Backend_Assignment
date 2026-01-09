@@ -15,6 +15,8 @@ class TaskModel:
         owner_id: ObjectId,
         status: str = "pending",
         created_at: Optional[datetime] = None,
+        updated_at: Optional[datetime] = None,
+        updated_by: Optional[ObjectId] = None,
         _id: Optional[ObjectId] = None,
     ):
         self.id = _id
@@ -23,6 +25,8 @@ class TaskModel:
         self.status = status
         self.owner_id = owner_id
         self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at
+        self.updated_by = updated_by
 
     def to_dict(self):
         return {
@@ -31,4 +35,6 @@ class TaskModel:
             "status": self.status,
             "owner_id": self.owner_id,
             "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "updated_by": self.updated_by,
         }

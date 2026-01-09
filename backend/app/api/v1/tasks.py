@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 from bson import ObjectId
 
 from app.schemas.task import TaskCreate, TaskUpdate, TaskResponse
 from app.utils.dependencies import get_current_user
 from app.services import task_services
+from app.core import database
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
@@ -32,20 +33,42 @@ def get_tasks(
             "description": task.get("description"),
             "status": task["status"],
             "owner_id": str(task["owner_id"]),
-            "created_at": task["created_at"]
+            "created_at": task["created_at"],
+            "updated_at": task.get("updated_at"),
+        "updated_by": (
+            str(task["updated_by"]) if task.get("updated_by") else None),
         }
         for task in tasks
     ]
 
 
-@router.put("/{task_id}")
+# @router.put("/{task_id}")
+# def update_task(
+#     task_id: str,
+#     payload: TaskUpdate,
+#     current_user=Depends(get_current_user)
+# ):
+#     task_services.update_task(
+#         ObjectId(task_id),
+#         payload,
+#         current_user
+#     )
+#     return {"message": "Task updated successfully"}
+
+@router.patch("/{task_id}")
 def update_task(
     task_id: str,
     payload: TaskUpdate,
     current_user=Depends(get_current_user)
 ):
-    task_services.update_task(ObjectId(task_id), payload, current_user)
+    task_services.update_task(
+        ObjectId(task_id),
+        payload,
+        current_user
+    )
     return {"message": "Task updated successfully"}
+
+
 
 
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)

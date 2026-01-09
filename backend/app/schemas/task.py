@@ -17,9 +17,12 @@ class TaskCreate(BaseModel):
 
 
 class TaskUpdate(BaseModel):
-    title: Optional[str] = None
-    description: Optional[str] = None
-    status: Optional[TaskStatus] = None
+    title: Optional[str]
+    description: Optional[str]
+    status: Optional[TaskStatus]
+
+    class Config:
+        extra = "forbid"
 
 
 class TaskResponse(BaseModel):
@@ -29,3 +32,5 @@ class TaskResponse(BaseModel):
     status: str
     owner_id: str
     created_at: datetime
+    updated_at: Optional[datetime] = None
+    updated_by: Optional[str] = None
