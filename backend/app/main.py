@@ -18,13 +18,13 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://primetradeai.vercel.app",
     ],
-    allow_origin_regex=r"https://primetradeai-.*\.vercel\.app",
+    allow_origin_regex=r"https://primetrade-ai-backend-assignment.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 
