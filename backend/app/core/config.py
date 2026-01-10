@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str
 
     # CORS
-    CORS_ORIGINS: str = "*"
+    # CORS_ORIGINS: str = "*"
 
     # Pydantic v2 settings config
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
