@@ -1,4 +1,5 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 from fastapi import HTTPException, status
 from app.core import database
 from app.models.task import TaskModel
@@ -24,12 +25,30 @@ def create_task(data, current_user):
     else:
         # Assign to specific user
         if data.assignee_id:
-            user = users_col.find_one({"_id": ObjectId(data.assignee_id)})
-            if not user:
-                raise HTTPException(
-                    status_code=404,
-                    detail="Assignee not found"
-                )
+            # Check if assignee_id is an email or ObjectId
+            # If it contains "@", treat it as an email, otherwise as ObjectId
+            if "@" in data.assignee_id:
+                # Look up user by email
+                user = users_col.find_one({"email": data.assignee_id})
+                if not user:
+                    raise HTTPException(
+                        status_code=404,
+                        detail=f"User with email '{data.assignee_id}' not found"
+                    )
+            else:
+                # Try to look up by ObjectId
+                try:
+                    user = users_col.find_one({"_id": ObjectId(data.assignee_id)})
+                    if not user:
+                        raise HTTPException(
+                            status_code=404,
+                            detail=f"User with ID '{data.assignee_id}' not found"
+                        )
+                except (InvalidId, ValueError, TypeError):
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"Invalid assignee ID format: '{data.assignee_id}'. Please provide either an email or a valid ObjectId"
+                    )
 
             tasks_to_create.append(
                 TaskModel(

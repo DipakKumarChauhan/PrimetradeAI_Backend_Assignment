@@ -31,5 +31,6 @@ class NoteResponse(BaseModel):
     title: str
     content: str
     owner_id: str
+    owner_email: Optional[str] = None
     visibility: NoteVisibility
     created_at: datetime

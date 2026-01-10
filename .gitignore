@@ -132,10 +132,25 @@ dmypy.json
 
 # Project specific
 backend/app/optional.txt
-guide.md
+frontend/optional.txt
+backend/guide.md
 *.env
 .env.local
 .env.*.local
+
+# Frontend / Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+*.local
+
+# Note: package-lock.json should be committed (not ignored)
 
 # OS files
 Thumbs.db
