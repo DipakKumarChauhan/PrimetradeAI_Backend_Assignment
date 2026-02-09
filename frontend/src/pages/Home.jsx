@@ -23,7 +23,7 @@ export default function Home() {
       }}
     >
       <div className="card" style={{ maxWidth: "420px", textAlign: "center" }}>
-        <h1>Primetrade.ai Application</h1>
+        <h1>SecureTasker</h1>
 
         <p style={{ color: "var(--muted)", marginBottom: "1.5rem" }}>
           Secure task & notes management with role-based access

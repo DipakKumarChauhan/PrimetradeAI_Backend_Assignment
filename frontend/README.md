@@ -1,8 +1,8 @@
-# 📌 Frontend README — PrimeTrade AI Internship Assignment
+# 📌 Frontend README — SecureTasker AI Internship Assignment
 
 ## 📖 Overview
 
-This is the frontend application for the PrimeTrade AI internship assignment.
+This is the frontend application for the SecureTasker AI internship assignment.
 
 The frontend is **not a standalone product** — it exists to:
 

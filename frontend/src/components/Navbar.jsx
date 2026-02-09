@@ -36,7 +36,7 @@ export default function Navbar() {
         borderBottom: "1px solid var(--border)",
       }}
     >
-      <h3 style={{ margin: 0 }}>Primetrade.ai</h3>
+      <h3 style={{ margin: 0 }}>SecureTasker</h3>
 
       <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
         {!user && (

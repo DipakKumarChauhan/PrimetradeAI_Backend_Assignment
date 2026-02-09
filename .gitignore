@@ -134,6 +134,7 @@ dmypy.json
 backend/app/optional.txt
 frontend/optional.txt
 backend/guide.md
+VERIFICATION_REPORT.md
 *.env
 .env.local
 .env.*.local

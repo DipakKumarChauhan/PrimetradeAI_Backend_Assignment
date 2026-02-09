@@ -12,43 +12,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    // <AuthProvider>
-    //   <BrowserRouter>
-    //     <Navbar/>
-    //     <Routes>
-    //       <Route path="/login" element={<Login />} />
-    //       <Route path="/register" element={<Register />} />
-          
-    //       {/* <Route path="/" element={<ProtectedRoute><div>Dashboard (Protected)</div></ProtectedRoute>} /> */}
 
-    //       <Route
-    //         path="/dashboard"
-    //         element={
-    //           <ProtectedRoute>
-    //             <Dashboard/>
-    //           </ProtectedRoute>
-    //         }
-    //       />
-    //       <Route
-    //         path="/tasks"
-    //         element={
-    //           <ProtectedRoute>
-    //             <Tasks />
-    //           </ProtectedRoute>
-    //         }
-    //       />
-    //       <Route
-    //         path="/notes"
-    //         element={
-    //           <ProtectedRoute>
-    //             <Notes />
-    //           </ProtectedRoute>
-    //         }
-    //       />
-    //       <Route path="*" element={<Login />} />
-    //     </Routes>
-    //   </BrowserRouter>
-    // </AuthProvider>
     <AuthProvider>
       <BrowserRouter>
         <Navbar />

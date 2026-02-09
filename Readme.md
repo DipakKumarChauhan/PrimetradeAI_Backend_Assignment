@@ -1,4 +1,4 @@
-# 📘 PrimeTrade AI — Internship Assignment
+# 📘 SecureTasker — Internship Assignment
 
 ## 📖 Project Overview
 
@@ -57,7 +57,7 @@ The system enables authenticated users to:
 ## 📂 Repository Structure
 
 ```
-primetrade_ai/
+SecureTasker/
 │
 ├── backend/
 │   ├── README.md           # Backend-specific documentation
@@ -317,7 +317,7 @@ This is an internship assignment project. For questions or improvements, please 
 
 ## 📄 License
 
-This project is part of an internship assignment for PrimeTrade AI.
+This project is part of an internship assignment for SecureTasker.
 
 ---
 
